@@ -5,6 +5,10 @@ from astropy.time import Time
 from tabulate import tabulate
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import pickle
+
+
+
 
 class target:
     def __init__(self, name, coord):
@@ -142,7 +146,7 @@ while True:
                 targets.append(target(targetName,SkyCoord(ra=input('Enter RA (J2000): '), dec=input('Enter DEC (J2000): '), frame='icrs', unit=(u.hourangle,u.deg))))
             except:
                 print("Error entering target manually.")
-    elif cmd=="remove" or cmd=="del":
+    elif cmd=="remove" or cmd=="del" or cmd=="rm":
         try:
             targets.pop(int(input("Enter target number to remove: ")))
         except:
@@ -157,7 +161,23 @@ while True:
         plot_point_on_graph(targets)
     elif cmd=="bye" or cmd=="exit":
         break
-    elif cmd=="time":
+    elif cmd=="time" or cmd=="lst":
         print("Local Sidereal Time: "+str(round(getLST(),4)))
+    elif cmd=="load" or cmd=="open":
+        try:
+            ffile=open(input("Enter name of target file: "), 'rb')
+            targets=pickle.load(ffile)
+            ffile.close()
+        except:
+            print("Error loading file!")
+    elif cmd=="save":
+        try:
+            ffile=open(input("Enter name of target file: "), 'wb')
+            pickle.dump(targets,ffile)
+            ffile.close()
+        except:
+            print("Error saving file!")
+    elif cmd=="clear":
+        targets=[]
     else:
-        print("Available Commands: add, remove, list, chart, time, bye")
+        print("Available Commands: add, remove, list, chart, time, load, save, clear, bye")
