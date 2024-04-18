@@ -24,7 +24,7 @@ def plot_point_on_graph(targets):
     plt.figure(figsize=(8, 6))
     
     # Load the background image
-    img = mpimg.imread('zones2.png')
+    img = mpimg.imread('resources/zones.png')
     
     # Display the background image
     plt.imshow(img, extent=[HA_range[0], HA_range[1], DEC_range[0], DEC_range[1]], aspect='auto')
